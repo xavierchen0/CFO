@@ -6,37 +6,37 @@ from logging.config import dictConfig
 
 
 def create_app(mode: Literal["dev", "test", "prod"]) -> Flask:
-    app = Flask(__name__, instance_relative_config=True)
+    server = Flask(__name__, instance_relative_config=True)
 
     # Configure logging
     dictConfig(d)
 
-    # Modify app config settings
+    # Modify server config settings
     if mode == "dev":
-        app.config.from_object("config.DevelopmentConfig")
+        server.config.from_object("config.DevelopmentConfig")
     elif mode == "test":
-        app.config.from_object("config.TestConfig")
+        server.config.from_object("config.TestConfig")
     elif mode == "prod":
-        app.config.from_object("config.ProductionConfig")
+        server.config.from_object("config.ProductionConfig")
 
     # Initalise db
-    db.init_app(app)
+    db.init_app(server)
 
-    # Create tables
-    with app.app_context():
+    with server.app_context():
+        # Create tables
         db.create_all()
 
         # Import Dash app
         from .dashboard import init_dashboard
 
-        app = init_dashboard(app)
+        server = init_dashboard(server)
 
     # ==================================
     # DELETE
     # ==================================
     # testing
-    @app.route("/")
+    @server.route("/")
     def hello():
         return "Hello World"
 
-    return app
+    return server
