@@ -1,6 +1,6 @@
 import dash
 import dash_bootstrap_components as dbc
-from dash import Dash, html
+from dash import Dash
 from flask import Flask
 
 from cfo.static.dashboard_layout import dashboard_layout
