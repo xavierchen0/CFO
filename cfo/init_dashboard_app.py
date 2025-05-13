@@ -4,6 +4,7 @@ from dash import Dash, html
 from flask import Flask
 
 from cfo.static.dashboard_layout import dashboard_layout
+from cfo.static.upload_files_layout import upload_files_layout
 
 
 def init_dashboard_app(server) -> Flask:
@@ -23,7 +24,7 @@ def init_dashboard_app(server) -> Flask:
 
     dash.register_page("dashboard", path="/", layout=dashboard_layout)
     dash.register_page(
-        "upload files", path="/upload", layout=html.Div("hello world")
+        "upload files", path="/upload", layout=upload_files_layout
     )
 
     # Initialise callbacks
