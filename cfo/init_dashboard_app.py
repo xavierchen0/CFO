@@ -19,6 +19,13 @@ def init_dashboard_app(server) -> Flask:
         pages_folder="",
     )
 
+    # Register Dashboard and Upload Files Page
+
+    dash.register_page("dashboard", path="/", layout=dashboard_layout)
+    dash.register_page(
+        "upload files", path="/upload", layout=html.Div("hello world")
+    )
+
     # Initialise callbacks
     create_callbacks(dash_app)
 
