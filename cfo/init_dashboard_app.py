@@ -33,7 +33,7 @@ def init_dashboard_app(server) -> Flask:
     return dash_app.server
 
 
-def create_callbacks(dashApp: Dash) -> None:
+def create_callbacks(dash_app: Dash) -> None:
     """
     Initialise callbacks
     """
