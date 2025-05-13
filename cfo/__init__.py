@@ -27,9 +27,9 @@ def create_app(mode: Literal["dev", "test", "prod"]) -> Flask:
         db.create_all()
 
         # Import Dash app
-        from .dashboard import init_dashboard
+        from .init_dashboard_app import init_dashboard_app
 
-        server = init_dashboard(server)
+        server = init_dashboard_app(server)
 
     # ==================================
     # DELETE
