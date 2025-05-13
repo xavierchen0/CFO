@@ -15,7 +15,11 @@ def init_dashboard_app(server) -> Flask:
     dash_app = Dash(
         server=server,
         routes_pathname_prefix="/dashboard/",
-        external_stylesheets=[dbc.themes.DARKLY, dbc.icons.FONT_AWESOME],
+        external_stylesheets=[
+            dbc.themes.DARKLY,
+            dbc.icons.FONT_AWESOME,
+            "https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap",
+        ],
         use_pages=True,
         pages_folder="",
     )

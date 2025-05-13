@@ -38,10 +38,14 @@
   --dawn-hl-low:#f4ede8;
   --dawn-hl-med:#dfdad9;
   --dawn-hl-hi:#cecacd;
+  
+  /* Font family */
+  --fontFamily:"JetBrains Mono"
 }
 
 body {
   background-color:var(--moon-base);
+  font-family:var(--fontFamily)
 }
 
 /* nav config */
