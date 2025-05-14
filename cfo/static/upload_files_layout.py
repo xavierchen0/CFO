@@ -21,6 +21,7 @@ upload_files_layout = [
                     "borderRadeus": "5px",
                     "textAlign": "center",
                 },
+                accept=".csv",
             ),
             justify="center",
             class_name="mx-3 mt-4",
