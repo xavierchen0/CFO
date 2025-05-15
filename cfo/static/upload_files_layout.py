@@ -8,6 +8,7 @@ upload_files_layout = [
     # Upload
     dbc.Container(
         dbc.Row(
+            # Only accept one .csv file at a time
             dcc.Upload(
                 id="upload-data",
                 children=html.Div(
