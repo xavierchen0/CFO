@@ -1,5 +1,22 @@
 """
-Logging configurations
+Logging Configurations
+
+Example Usage:
+```python
+import logging
+from logging_conf import CustomFormatter
+
+# Initialise logger
+logger = logging.getLogger()
+# Initialise handler to read and write logs
+handler = logging.StreamHandler()
+# Set handler's Formatter
+handler.setFormatter(CustomFormatter())
+# Add handler to logger
+logger.addHandler(handler)
+# (Optional) set lowest log level as DEBUG
+logger.setLevel(logging.DEBUG)
+```
 """
 
 import logging
@@ -12,17 +29,31 @@ class CustomFormatter(logging.Formatter):
     yellow = "\x1b[38;2;246;193;119m"
     green = "\x1b[38;2;119;221;119m"
     cyan = "\x1b[38;2;183;255;250m"
+    reset = "\x1b[0m"
+
+    # Emojis
+    # Don't change the whitespaces; it is to make sure formatting is good
+    debug_icon = "[\U0001f41e "
+    info_icon = "[\u2139 "
+    warning_icon = "[\u26a0 "
+    error_icon = "[\u274c "
+    critical_icon = "[\U0001f525 "
 
     # Displayed format
-    format = "%(asctime)s [%(levelname)s]: %(filename)s:%(funcName)s - %(message)s"
+    format = "%(levelname)s] [%(asctime)s] [%(filename)s:%(funcName)s]:"
+    message = "    %(message)s"
 
     # Formats
     FORMATS = {
-        logging.DEBUG: cyan + format,
-        logging.INFO: green + format,
-        logging.WARNING: yellow + format,
-        logging.ERROR: red + format,
-        logging.CRITICAL: bolddarkred + format,
+        logging.DEBUG: cyan + debug_icon + format + reset + message,
+        logging.INFO: green + info_icon + format + reset + message,
+        logging.WARNING: yellow + warning_icon + format + reset + message,
+        logging.ERROR: red + error_icon + format + reset + message,
+        logging.CRITICAL: bolddarkred
+        + critical_icon
+        + format
+        + reset
+        + message,
     }
 
     def format(self, record):
