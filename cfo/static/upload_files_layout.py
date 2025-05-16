@@ -10,7 +10,7 @@ upload_files_layout = [
         dbc.Row(
             # Only accept one .csv file at a time
             dcc.Upload(
-                id="upload-data",
+                id="upload_data",
                 children=html.Div(
                     ["Drag and Drop, or ", html.A("Select Files")]
                 ),
