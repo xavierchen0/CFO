@@ -45,7 +45,8 @@
 
 body {
   background-color:var(--moon-base);
-  font-family:var(--fontFamily)
+  font-family:var(--fontFamily);
+  color: var(--moon-text)
 }
 
 /* nav config */
