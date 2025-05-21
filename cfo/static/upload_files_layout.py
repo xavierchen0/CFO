@@ -9,23 +9,36 @@ upload_files_layout = [
     dbc.Container(
         dbc.Row(
             # Only accept one .csv file at a time
-            dcc.Upload(
-                id="upload_data",
-                children=html.Div(
-                    ["Drag and Drop, or ", html.A("Select Files")]
+            dbc.Col(
+                dcc.Upload(
+                    id="upload_data",
+                    children=html.Div(
+                        ["Drag and Drop, or ", html.A("Select Files")]
+                    ),
+                    style={
+                        "height": "300px",
+                        "lineHeight": "300px",
+                        "borderWidth": "1px",
+                        "borderStyle": "dashed",
+                        "borderRadius": "15px",
+                        "textAlign": "center",
+                    },
+                    accept=".csv",
                 ),
-                style={
-                    "height": "300px",
-                    "lineHeight": "300px",
-                    "borderWidth": "1px",
-                    "borderStyle": "dashed",
-                    "borderRadeus": "5px",
-                    "textAlign": "center",
-                },
-                accept=".csv",
             ),
-            justify="center",
-            class_name="mx-3 mt-4",
+            className="mx-3 mt-4",
+        ),
+        fluid=True,
+    ),
+    # Displayed table to check before submitting
+    dbc.Container(
+        dbc.Row(
+            dbc.Col(
+                html.Div(
+                    id="displayed_table",
+                ),
+            ),
+            className="mx-3 mt-4",
         ),
         fluid=True,
     ),
