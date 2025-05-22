@@ -189,6 +189,13 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
                     },
                     "backgroundColor": "#eb6f92",
                 },
+                {
+                    "if": {
+                        "filter_query": "{income} != 'true' && {income} != 'false'",
+                        "column_id": "income",
+                    },
+                    "backgroundColor": "#eb6f92",
+                },
             ],
         }
 
