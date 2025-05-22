@@ -9,6 +9,17 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
     Initialise callbacks
     """
 
+    def _parse_uploaded_file(contents: bytes) -> pd.DataFrame:
+        """
+        Convert base64-encoded uploaded file to pandas dataframe
+        """
+        _, content_string = contents.split(",")
+        decoded = base64.b64decode(content_string)
+        df = pd.read_csv(
+            io.StringIO(decoded.decode("utf-8")),
+        )
+        return df
+
     def _check_columns_exist(df: pd.DataFrame) -> pd.DataFrame:
         """
         Internal method to check if a required columns exist. If not, add
@@ -34,13 +45,9 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
             return None
 
         # Create df
-        _, content_string = contents.split(",")
-        decoded = base64.b64decode(content_string)
-        df = pd.read_csv(
-            io.StringIO(decoded.decode("utf-8")),
-        )
+        df = _parse_uploaded_file(contents)
 
-        # Check if columns and exist and add if not
+        # Check if columns exist and add if not
         df = _check_columns_exist(df)
 
         # process date column
