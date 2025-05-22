@@ -90,7 +90,7 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         income_is_open = False
         income_error_msg = ""
         if df["income"].dtype == object:
-            df["income"] = df["income"].str.lower()
+            df["income"] = df["income"].astype(str).str.lower()
             if not df["income"].isin(["true", "false"]).all():
                 server.logger.error(
                     "'income' column contains other values that are not 'true' or 'false'."
