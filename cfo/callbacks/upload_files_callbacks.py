@@ -106,14 +106,19 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         # process amount column
         amount_is_open = False
         amount_error_msg = ""
+
+        def _check_valid_num(val):
+            if val.replace(".", "", 1).replace("-", "", 1).isdigit():
+                return val
+            return pd.NA
+
         if not pd.api.types.is_numeric_dtype(df["amount"]):
             server.logger.error(
                 "'amount' column contains other values that are not numeric values."
             )
             amount_is_open = True
-            amount_error_msg = (
-                "'amount' column contains non-numeric values. Edit below."
-            )
+            amount_error_msg = "'amount' column contains non-numeric values. Non-numeric values will become blank cells. Edit below."
+        df["amount"] = df["amount"].astype(str).apply(_check_valid_num)
 
         # add row number column
         df["index"] = df.index
