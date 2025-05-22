@@ -38,9 +38,9 @@ upload_files_layout = [
                 dbc.Alert(
                     [
                         html.H4("Error"),
-                        html.P(id="error_msg"),
+                        html.P(id="alert_date_error_msg"),
                     ],
-                    id="alert",
+                    id="alert_date",
                     is_open=False,
                     color="#eb6f92",
                     dismissable=True,

@@ -37,8 +37,8 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
     # TODO: Add loading state for the table while it processes
     @dash_app.callback(
         Output("displayed_table", "children"),
-        Output("alert", "is_open"),
-        Output("error_msg", "children"),
+        Output("alert_date", "is_open"),
+        Output("alert_date_error_msg", "children"),
         Input("upload_data", "contents"),
     )
     def parse_and_display_table(
@@ -68,8 +68,8 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         except Exception:
             server.logger.error("error parsing date")
             server.logger.debug("An exception occurred", exc_info=True)
-            is_open = True
-            error_msg = "Please ensure the date column follows the format YYYY-MM-DD (e.g., 2025-05-22). Edit below."
+            date_is_open = True
+            date_error_msg = "Please ensure the date column follows the format YYYY-MM-DD (e.g., 2025-05-22). Edit below."
 
         # add row number column
         df["index"] = df.index
@@ -91,7 +91,7 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
             "style_table": {"overflowX": "auto"},
         }
 
-        err = [is_open, error_msg]
+        err = [date_is_open, date_error_msg]
         if len(df) <= 30:
             return (
                 dash_table.DataTable(
