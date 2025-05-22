@@ -63,6 +63,20 @@ upload_files_layout = [
                 className="mx-3 my-4",
             ),
             dbc.Row(
+                dbc.Alert(
+                    [
+                        html.H4("Error"),
+                        html.P(id="alert_amount_error_msg"),
+                    ],
+                    id="alert_amount",
+                    is_open=False,
+                    color="#eb6f92",
+                    dismissable=True,
+                    fade=True,
+                ),
+                className="mx-3 my-4",
+            ),
+            dbc.Row(
                 dbc.Col(
                     html.Div(
                         id="displayed_table",

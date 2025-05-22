@@ -1,6 +1,6 @@
 import base64
 import io
-from typing import Tuple
+from typing import Tuple, Union
 
 import pandas as pd
 from dash import Dash, Input, Output, callback, dash_table
@@ -41,15 +41,27 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         Output("alert_date_error_msg", "children"),
         Output("alert_income", "is_open"),
         Output("alert_income_error_msg", "children"),
+        Output("alert_amount", "is_open"),
+        Output("alert_amount_error_msg", "children"),
         Input("upload_data", "contents"),
     )
     def parse_and_display_table(
         contents,
-    ) -> Tuple[dash_table.DataTable, bool, str] | None:
+    ) -> Tuple[
+        Union[dash_table.DataTable, str], bool, str, bool, str, bool, str
+    ]:
         # Handle the case when Dash app is first initialised and all the callbacks are
         #   called; otherwise, this callback will throw an error
         if not contents:
-            return None
+            return (
+                "",
+                False,
+                "",
+                False,
+                "",
+                False,
+                "",
+            )
 
         # Create df
         df = _parse_uploaded_file(contents)
@@ -85,6 +97,18 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
                 income_is_open = True
                 income_error_msg = "'income' column contains other values that are not 'true' or 'false'. Edit below."
 
+        # process amount column
+        amount_is_open = False
+        amount_error_msg = ""
+        if not pd.api.types.is_numeric_dtype(df["amount"]):
+            server.logger.error(
+                "'amount' column contains other values that are not 'true' or 'false'."
+            )
+            amount_is_open = True
+            amount_error_msg = (
+                "'amount' column contains non-numeric values. Edit below."
+            )
+
         # add row number column
         df["index"] = df.index
 
@@ -105,7 +129,14 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
             "style_table": {"overflowX": "auto"},
         }
 
-        err = [date_is_open, date_error_msg, income_is_open, income_error_msg]
+        err = [
+            date_is_open,
+            date_error_msg,
+            income_is_open,
+            income_error_msg,
+            amount_is_open,
+            amount_error_msg,
+        ]
         if len(df) <= 30:
             return (
                 dash_table.DataTable(
