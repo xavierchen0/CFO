@@ -155,6 +155,36 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
             },
             "style_data": {"backgroundColor": "#56526e"},
             "style_table": {"overflowX": "auto"},
+            "style_data_conditional": [
+                {
+                    "if": {
+                        "filter_query": "{date} is blank",
+                        "column_id": "date",
+                    },
+                    "backgroundColor": "#eb6f92",
+                },
+                {
+                    "if": {
+                        "filter_query": "{income} is blank",
+                        "column_id": "income",
+                    },
+                    "backgroundColor": "#eb6f92",
+                },
+                {
+                    "if": {
+                        "filter_query": "{category name} is blank",
+                        "column_id": "category name",
+                    },
+                    "backgroundColor": "#eb6f92",
+                },
+                {
+                    "if": {
+                        "filter_query": "{amount} is blank",
+                        "column_id": "amount",
+                    },
+                    "backgroundColor": "#eb6f92",
+                },
+            ],
         }
 
         err = [
