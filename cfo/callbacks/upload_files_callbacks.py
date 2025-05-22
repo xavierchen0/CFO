@@ -39,6 +39,8 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         Output("displayed_table", "children"),
         Output("alert_date", "is_open"),
         Output("alert_date_error_msg", "children"),
+        Output("alert_income", "is_open"),
+        Output("alert_income_error_msg", "children"),
         Input("upload_data", "contents"),
     )
     def parse_and_display_table(
@@ -71,6 +73,18 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
             date_is_open = True
             date_error_msg = "Please ensure the date column follows the format YYYY-MM-DD (e.g., 2025-05-22). Edit below."
 
+        # process income column
+        income_is_open = False
+        income_error_msg = ""
+        if df["income"].dtype == object:
+            df["income"] = df["income"].str.lower()
+            if not df["income"].isin(["true", "false"]).all():
+                server.logger.error(
+                    "'income' column contains other values that are not 'true' or 'false'."
+                )
+                income_is_open = True
+                income_error_msg = "'income' column contains other values that are not 'true' or 'false'. Edit below."
+
         # add row number column
         df["index"] = df.index
 
@@ -91,7 +105,7 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
             "style_table": {"overflowX": "auto"},
         }
 
-        err = [date_is_open, date_error_msg]
+        err = [date_is_open, date_error_msg, income_is_open, income_error_msg]
         if len(df) <= 30:
             return (
                 dash_table.DataTable(
