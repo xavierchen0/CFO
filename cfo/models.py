@@ -1,6 +1,7 @@
+from dataclasses import dataclass
+
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from dataclasses import dataclass
 
 
 class Base(DeclarativeBase):

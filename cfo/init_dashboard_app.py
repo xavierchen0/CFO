@@ -3,9 +3,9 @@ import dash_bootstrap_components as dbc
 from dash import Dash
 from flask import Flask
 
+from cfo.callbacks.upload_files_callbacks import create_upload_files_callbacks
 from cfo.static.dashboard_layout import dashboard_layout
 from cfo.static.upload_files_layout import upload_files_layout
-from cfo.callbacks.upload_files_callbacks import create_upload_files_callbacks
 
 
 def init_dashboard_app(server) -> Flask:

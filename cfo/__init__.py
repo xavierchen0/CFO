@@ -1,8 +1,10 @@
-from typing import Literal
-from flask import Flask
-from .models import db
-from .log_conf import d
 from logging.config import dictConfig
+from typing import Literal
+
+from flask import Flask
+
+from .log_conf import d
+from .models import db
 
 
 def create_app(mode: Literal["dev", "test", "prod"]) -> Flask:

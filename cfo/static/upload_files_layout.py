@@ -1,6 +1,7 @@
-from cfo.static.reuse_components import top_upload_files
-from dash import html, dcc
 import dash_bootstrap_components as dbc
+from dash import dcc, html
+
+from cfo.static.reuse_components import top_upload_files
 
 upload_files_layout = [
     # Top of page

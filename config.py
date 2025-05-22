@@ -1,5 +1,6 @@
-from typing import ClassVar
 from os import getenv
+from typing import ClassVar
+
 from dotenv import load_dotenv
 
 load_dotenv()
