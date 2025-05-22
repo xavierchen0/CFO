@@ -26,20 +26,36 @@ upload_files_layout = [
                     accept=".csv",
                 ),
             ),
-            className="mx-3 mt-4",
+            className="mx-3 my-4",
         ),
         fluid=True,
     ),
     # Displayed table to check before submitting
     dbc.Container(
-        dbc.Row(
-            dbc.Col(
-                html.Div(
-                    id="displayed_table",
+        [
+            dbc.Row(
+                dbc.Alert(
+                    [
+                        html.H4("Error"),
+                        html.P(id="error_msg"),
+                    ],
+                    id="alert",
+                    is_open=False,
+                    color="#eb6f92",
+                    dismissable=True,
+                    fade=True,
                 ),
+                className="mx-3 my-4",
             ),
-            className="mx-3 mt-4",
-        ),
+            dbc.Row(
+                dbc.Col(
+                    html.Div(
+                        id="displayed_table",
+                    ),
+                ),
+                className="mx-3 my-4",
+            ),
+        ],
         fluid=True,
     ),
 ]
