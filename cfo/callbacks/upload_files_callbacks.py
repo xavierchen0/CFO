@@ -108,7 +108,7 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         amount_error_msg = ""
         if not pd.api.types.is_numeric_dtype(df["amount"]):
             server.logger.error(
-                "'amount' column contains other values that are not 'true' or 'false'."
+                "'amount' column contains other values that are not numeric values."
             )
             amount_is_open = True
             amount_error_msg = (
