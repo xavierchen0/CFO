@@ -4,7 +4,7 @@ import io
 import base64
 
 
-def create_upload_files_callbacks(dash_app: Dash) -> None:
+def create_upload_files_callbacks(dash_app: Dash, server) -> None:
     """
     Initialise callbacks
     """

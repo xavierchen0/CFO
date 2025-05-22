@@ -33,6 +33,6 @@ def init_dashboard_app(server) -> Flask:
     )
 
     # Initialise callbacks
-    create_upload_files_callbacks(dash_app)
+    create_upload_files_callbacks(dash_app, server)
 
     return dash_app.server
