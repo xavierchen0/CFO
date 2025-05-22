@@ -117,9 +117,36 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         filtered_df = df[["index", "date", "income", "category name", "amount"]]
 
         # Display uploaded csv file as a table
+        _cols_schema = [
+            {
+                "name": "index",
+                "id": "index",
+                "type": "numeric",
+            },
+            {
+                "name": "date",
+                "id": "date",
+                "type": "datetime",
+            },
+            {
+                "name": "income",
+                "id": "income",
+                "type": "text",
+            },
+            {
+                "name": "category name",
+                "id": "category name",
+                "type": "text",
+            },
+            {
+                "name": "amount",
+                "id": "amount",
+                "type": "numeric",
+            },
+        ]
         common_table_config = {
             "data": filtered_df.to_dict("records"),
-            "columns": [{"name": i, "id": i} for i in filtered_df.columns],
+            "columns": _cols_schema,
             "style_header": {
                 "overflow": "hidden",
                 "textOverflow": "ellipsis",
