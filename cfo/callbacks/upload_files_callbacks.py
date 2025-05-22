@@ -57,6 +57,8 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         # Check if columns exist and add if not
         df = _check_columns_exist(df)
 
+        date_is_open = False
+        date_error_msg = ""
         # process date column
         # TODO: do further data processing in the next step (e.g. remove trailing and leading whitespaces)
         # TODO: Be able to display table and then further edit so validate when submitting to database
@@ -64,9 +66,7 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         # TODO: change to datetime before submitting to database
         # TODO: Split date and time to only show date and remove time
         try:
-            df["date"] = pd.to_datetime(
-                df["date"], format="%Y-%m-%d"
-            ).dt.strftime("%Y-%m-%d")
+            df["date"] = pd.to_datetime(df["date"]).dt.strftime("%Y-%m-%d")
         except Exception:
             server.logger.error("error parsing date")
             server.logger.debug("An exception occurred", exc_info=True)
