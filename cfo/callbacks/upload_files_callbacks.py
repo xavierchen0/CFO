@@ -18,7 +18,6 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         for col in required_cols:
             if col not in df.columns:
                 df[col] = pd.Series(dtype="object")
-                server.logger.debug(f"{col} not in df")
         return df
 
     # TODO: Add loading state for the table while it processes
