@@ -41,7 +41,9 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         Output("error_msg", "children"),
         Input("upload_data", "contents"),
     )
-    def parse_and_display_table(contents) -> dash_table.DataTable | None:
+    def parse_and_display_table(
+        contents,
+    ) -> Tuple[dash_table.DataTable, bool, str] | None:
         # Handle the case when Dash app is first initialised and all the callbacks are
         #   called; otherwise, this callback will throw an error
         if not contents:
