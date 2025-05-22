@@ -115,7 +115,10 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
                 ),
                 *err,
             )
-        return dash_table.DataTable(
-            **common_table_config,
-            page_size=10,
+        return (
+            dash_table.DataTable(
+                **common_table_config,
+                page_size=10,
+            ),
+            *err,
         )
