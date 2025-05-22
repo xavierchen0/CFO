@@ -78,8 +78,11 @@ upload_files_layout = [
             ),
             dbc.Row(
                 dbc.Col(
-                    html.Div(
-                        id="displayed_table",
+                    dcc.Loading(
+                        html.Div(
+                            id="displayed_table",
+                        ),
+                        type="graph",
                     ),
                 ),
                 className="mx-3 my-4",
