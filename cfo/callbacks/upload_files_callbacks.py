@@ -60,8 +60,9 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
             df["date"] = pd.to_datetime(
                 df["date"], format="%Y-%m-%d"
             ).dt.strftime("%Y-%m-%d")
-        except Exception as e:
+        except Exception:
             server.logger.error("error parsing date")
+            server.logger.debug("An exception occurred", exc_info=True)
             is_open = True
             error_msg = "Please ensure the date column follows the format YYYY-MM-DD (e.g., 2025-05-22). Edit below."
 
