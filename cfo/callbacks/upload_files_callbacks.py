@@ -20,6 +20,7 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         decoded = base64.b64decode(content_string)
         df = pd.read_csv(
             io.StringIO(decoded.decode("utf-8")),
+            keep_default_na=False,
         )
         return df
 
