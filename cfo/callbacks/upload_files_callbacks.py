@@ -22,7 +22,10 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
 
     # TODO: Add loading state for the table while it processes
     @dash_app.callback(
-        Output("displayed_table", "children"), Input("upload_data", "contents")
+        Output("displayed_table", "children"),
+        Output("alert", "is_open"),
+        Output("error_msg", "children"),
+        Input("upload_data", "contents"),
     )
     def parse_and_display_table(contents) -> dash_table.DataTable | None:
         # Handle the case when Dash app is first initialised and all the callbacks are
@@ -46,7 +49,14 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         # TODO: Inform user what is missing and what they should add
         # TODO: change to datetime before submitting to database
         # TODO: Split date and time to only show date and remove time
-        df[["date", "time"]] = df["date"].str.split(" ", expand=True)
+        try:
+            df["date"] = pd.to_datetime(
+                df["date"], format="%Y-%m-%d"
+            ).dt.strftime("%Y-%m-%d")
+        except Exception as e:
+            server.logger.error("error parsing date")
+            is_open = True
+            error_msg = "Please ensure the date column follows the format YYYY-MM-DD (e.g., 2025-05-22)"
 
         # add row number column
         df["index"] = df.index
@@ -57,6 +67,7 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         # Display uploaded csv file as a table
         common_table_config = {
             "data": filtered_df.to_dict("records"),
+            "columns": [{"name": i, "id": i} for i in filtered_df.columns],
             "style_header": {
                 "overflow": "hidden",
                 "textOverflow": "ellipsis",
@@ -67,11 +78,15 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
             "style_table": {"overflowX": "auto"},
         }
 
+        err = [is_open, error_msg]
         if len(df) <= 30:
-            return dash_table.DataTable(
-                **common_table_config,
-                page_action="none",
-                fixed_rows={"headers": True},
+            return (
+                dash_table.DataTable(
+                    **common_table_config,
+                    page_action="none",
+                    fixed_rows={"headers": True},
+                ),
+                *err,
             )
         return dash_table.DataTable(
             **common_table_config,
