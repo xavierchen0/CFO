@@ -56,7 +56,7 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         except Exception as e:
             server.logger.error("error parsing date")
             is_open = True
-            error_msg = "Please ensure the date column follows the format YYYY-MM-DD (e.g., 2025-05-22)"
+            error_msg = "Please ensure the date column follows the format YYYY-MM-DD (e.g., 2025-05-22). Edit below."
 
         # add row number column
         df["index"] = df.index
