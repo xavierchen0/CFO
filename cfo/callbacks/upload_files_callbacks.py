@@ -79,10 +79,15 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         # TODO: change to datetime before submitting to database
         # TODO: Split date and time to only show date and remove time
         try:
-            df["date"] = pd.to_datetime(df["date"]).dt.strftime("%Y-%m-%d")
+            df["date"] = pd.to_datetime(df["date"], errors="raise").dt.strftime(
+                "%Y-%m-%d"
+            )
         except Exception:
             server.logger.error("error parsing date")
             server.logger.debug("An exception occurred", exc_info=True)
+            df["date"] = pd.to_datetime(
+                df["date"], errors="coerce"
+            ).dt.strftime("%Y-%m-%d")
             date_is_open = True
             date_error_msg = "Please ensure the date column follows the format YYYY-MM-DD (e.g., 2025-05-22). Edit below."
 
