@@ -2,8 +2,9 @@ import base64
 import io
 from typing import Tuple, Union
 
+import dash_bootstrap_components as dbc
 import pandas as pd
-from dash import Dash, Input, Output, dash_table
+from dash import Dash, Input, Output, dash_table, dcc, html
 
 
 def create_upload_files_callbacks(dash_app: Dash, server) -> None:
@@ -214,11 +215,30 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         ]
         if len(df) <= 30:
             return (
-                dash_table.DataTable(
-                    **common_table_config,
-                    page_action="none",
-                    fixed_rows={"headers": True},
-                ),
+                [
+                    dash_table.DataTable(
+                        **common_table_config,
+                        page_action="none",
+                        fixed_rows={"headers": True},
+                    ),
+                    dbc.Row(
+                        dbc.Col(
+                            dcc.Loading(
+                                # html.Button(
+                                #     "Submit",
+                                #     id="submit_but",
+                                # ),
+                                dbc.Button(
+                                    "Submit",
+                                    id="submit_but",
+                                    style={"backgroundColor": "#3e8fb0"},
+                                ),
+                                type="circle",
+                            ),
+                            className="text-end mx-3 my-4",
+                        ),
+                    ),
+                ],
                 *err,
             )
         return (
