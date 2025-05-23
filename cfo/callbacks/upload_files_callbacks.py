@@ -3,8 +3,7 @@ import io
 from typing import Tuple, Union
 
 import pandas as pd
-from dash import Dash, Input, Output, callback, dash_table
-from flask import Flask
+from dash import Dash, Input, Output, dash_table
 
 
 def create_upload_files_callbacks(dash_app: Dash, server) -> None:
