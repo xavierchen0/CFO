@@ -156,6 +156,7 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         common_table_config = {
             "data": filtered_df.to_dict("records"),
             "columns": _cols_schema,
+            "editable": True,
             "style_header": {
                 "overflow": "hidden",
                 "textOverflow": "ellipsis",
