@@ -74,7 +74,7 @@ upload_files_layout = [
                     dismissable=True,
                     fade=True,
                 ),
-                className="mx-3 my-4",
+                className="mx-3 mt-4",
             ),
             dbc.Row(
                 dbc.Col(
@@ -85,7 +85,7 @@ upload_files_layout = [
                         type="graph",
                     ),
                 ),
-                className="mx-3 my-4",
+                className="mx-3 mb-4",
             ),
         ],
         fluid=True,

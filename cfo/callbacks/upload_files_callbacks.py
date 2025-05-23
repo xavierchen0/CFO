@@ -216,18 +216,9 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         if len(df) <= 30:
             return (
                 [
-                    dash_table.DataTable(
-                        **common_table_config,
-                        page_action="none",
-                        fixed_rows={"headers": True},
-                    ),
                     dbc.Row(
                         dbc.Col(
                             dcc.Loading(
-                                # html.Button(
-                                #     "Submit",
-                                #     id="submit_but",
-                                # ),
                                 dbc.Button(
                                     "Submit",
                                     id="submit_but",
@@ -235,8 +226,13 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
                                 ),
                                 type="circle",
                             ),
-                            className="text-end mx-3 my-4",
                         ),
+                        className="mb-3",
+                    ),
+                    dash_table.DataTable(
+                        **common_table_config,
+                        page_action="none",
+                        fixed_rows={"headers": True},
                     ),
                 ],
                 *err,
