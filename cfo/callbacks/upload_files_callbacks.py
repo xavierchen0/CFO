@@ -1,6 +1,6 @@
 import base64
 import io
-from typing import Tuple, Union
+from typing import Tuple, List, Union
 
 import dash_bootstrap_components as dbc
 import pandas as pd
@@ -49,13 +49,19 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
     def parse_and_display_table(
         contents,
     ) -> Tuple[
-        Union[dash_table.DataTable, str], bool, str, bool, str, bool, str
+        Union[List[Union[dbc.Row, dash_table.DataTable]], List[str]],
+        bool,
+        str,
+        bool,
+        str,
+        bool,
+        str,
     ]:
         # Handle the case when Dash app is first initialised and all the callbacks are
         #   called; otherwise, this callback will throw an error
         if not contents:
             return (
-                "",
+                [""],
                 False,
                 "",
                 False,
@@ -238,9 +244,11 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
                 *err,
             )
         return (
-            dash_table.DataTable(
-                **common_table_config,
-                page_size=10,
-            ),
+            [
+                dash_table.DataTable(
+                    **common_table_config,
+                    page_size=10,
+                )
+            ],
             *err,
         )
