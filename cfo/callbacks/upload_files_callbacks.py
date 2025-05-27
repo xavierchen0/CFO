@@ -127,16 +127,18 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         df["amount"] = df["amount"].astype(str).apply(_check_valid_num)
 
         # add row number column
-        df["index"] = df.index
+        df["transaction_id"] = df.index
 
         # Filter df for specific columns
-        filtered_df = df[["index", "date", "income", "category name", "amount"]]
+        filtered_df = df[
+            ["transaction_id", "date", "income", "category name", "amount"]
+        ]
 
         # Display uploaded csv file as a table
         _cols_schema = [
             {
-                "name": "index",
-                "id": "index",
+                "name": "transaction_id",
+                "id": "transaction_id",
                 "type": "numeric",
             },
             {
