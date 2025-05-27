@@ -35,6 +35,11 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
                 df[col] = pd.Series(dtype="object")
         return df
 
+    def _check_valid_num(val):
+        if val.replace(".", "", 1).replace("-", "", 1).isdigit():
+            return val
+        return pd.NA
+
     # TODO: Add loading state for the table while it processes
     @dash_app.callback(
         Output("displayed_table", "children"),
@@ -112,11 +117,6 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         # process amount column
         amount_is_open = False
         amount_error_msg = ""
-
-        def _check_valid_num(val):
-            if val.replace(".", "", 1).replace("-", "", 1).isdigit():
-                return val
-            return pd.NA
 
         if not pd.api.types.is_numeric_dtype(df["amount"]):
             server.logger.error(
