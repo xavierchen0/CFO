@@ -20,7 +20,7 @@ class DevelopmentConfig(Config):
     Development config
     """
 
-    SQLALCHEMY_DATABASE_URI = "sqlite:///project.db"
+    SQLALCHEMY_DATABASE_URI = getenv("SQLALCHEMY_DATABASE_URI")
 
 
 class TestConfig(Config):
