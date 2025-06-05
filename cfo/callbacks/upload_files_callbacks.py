@@ -7,7 +7,9 @@ import pandas as pd
 from dash import Dash, Input, Output, dash_table, dcc, html
 
 
-def create_upload_files_callbacks(dash_app: Dash, server) -> None:
+def create_upload_files_callbacks(
+    dash_app: Dash, server: Flask, db, Transaction
+) -> None:
     """
     Initialise callbacks
     """
@@ -40,7 +42,6 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
             return val
         return pd.NA
 
-    # TODO: Add loading state for the table while it processes
     @dash_app.callback(
         Output("displayed_table", "children"),
         Output("alert_date", "is_open"),
@@ -85,10 +86,7 @@ def create_upload_files_callbacks(dash_app: Dash, server) -> None:
         date_error_msg = ""
         # process date column
         # TODO: do further data processing in the next step (e.g. remove trailing and leading whitespaces)
-        # TODO: Be able to display table and then further edit so validate when submitting to database
-        # TODO: Inform user what is missing and what they should add
         # TODO: change to datetime before submitting to database
-        # TODO: Split date and time to only show date and remove time
         try:
             df["date"] = pd.to_datetime(df["date"], errors="raise").dt.strftime(
                 "%Y-%m-%d"

@@ -7,6 +7,8 @@ from cfo.callbacks.upload_files_callbacks import create_upload_files_callbacks
 from cfo.static.dashboard_layout import dashboard_layout
 from cfo.static.upload_files_layout import upload_files_layout
 
+from .models import Transaction, db
+
 
 def init_dashboard_app(server) -> Flask:
     """
@@ -33,6 +35,6 @@ def init_dashboard_app(server) -> Flask:
     )
 
     # Initialise callbacks
-    create_upload_files_callbacks(dash_app, server)
+    create_upload_files_callbacks(dash_app, server, db, Transaction)
 
     return dash_app.server
