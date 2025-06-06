@@ -22,11 +22,11 @@ def create_app(mode: Literal["dev", "test", "prod"]) -> Flask:
         server.config.from_object("config.ProductionConfig")
 
     # Initalise db
-    # db.init_app(server)
+    db.init_app(server)
 
     with server.app_context():
         # Create tables
-        # db.create_all()
+        db.create_all()
 
         # Import Dash app
         from .init_dashboard_app import init_dashboard_app
