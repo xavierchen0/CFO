@@ -1,0 +1,8 @@
+dash
+pandas
+flask
+SQLAlchemy
+Flask-SQLAlchemy
+dotenv
+dash-bootstrap-components
+
